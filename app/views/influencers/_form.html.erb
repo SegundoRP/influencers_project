@@ -1,0 +1,41 @@
+<%= form_with model: influencer, url: influencers_path, method: :post do |f| %>
+  <% if influencer.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2><%= pluralize(influencer.errors.count, "error") %> prohibited this influencer from being saved:</h2>
+
+      <ul>
+        <% influencer.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :username, "Username" %>
+    <%= f.text_field :username %>
+  </div>
+  <div>
+    <%= f.label :fullname, "Full Name" %>
+    <%= f.text_field :fullname %>
+  </div>
+  <div>
+    <%= f.label :picture, "Profile Picture URL" %>
+    <%= f.text_field :picture %>
+  </div>
+  <div>
+    <%= f.label :followers, "Followers" %>
+    <%= f.number_field :followers %>
+  </div>
+  <div>
+    <%= f.label :platform, "Platform" %>
+    <%= f.select :platform, Influencer.platforms.keys.map { |p| [p.titleize, p] } %>
+  </div>
+  <div>
+    <%= f.label :is_verified, "Is verified" %>
+    <%= f.text_field :is_verified %>
+  </div>
+  <div>
+    <%= f.submit "Add Influencer" %>
+  </div>
+<% end %>

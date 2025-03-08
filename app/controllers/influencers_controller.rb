@@ -9,7 +9,7 @@ class InfluencersController < ApplicationController
     respond_to do |format|
       if @influencer.save
         format.turbo_stream do
-          render turbo_stream: turbo_stream.append("influencers", partial: "influencers/influencer", locals: { influencer: influencer })
+          render turbo_stream: turbo_stream.append("influencers", partial: "influencers/influencer", locals: { influencer: @influencer })
         end
       else
         format.html { render :new, status: :unprocessable_entity }

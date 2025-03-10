@@ -4,6 +4,15 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   connect() {
     this.open();
+    this.element.addEventListener("close", this.enableBodyScroll.bind(this));
+  }
+
+  disconnect() {
+    this.element.removeEventListener("close", this.enableBodyScroll.bind(this));
+  }
+
+  enableBodyScroll() {
+    document.body.classList.remove('overflow-hidden');
   }
 
   clickOutside(event) {
@@ -11,9 +20,7 @@ export default class extends Controller {
   }
 
   submitEnd(event) {
-    if (event.detail.success) {
-      this.close();
-    }
+    if (event.detail.success) this.close();
   }
 
   open() {
@@ -23,9 +30,5 @@ export default class extends Controller {
 
   close() {
     this.element.close();
-    const frame = document.getElementById('new_influencer');
-    frame.removeAttribute("src");
-    frame.innerHTML = "";
   }
-
 }

@@ -1,6 +1,6 @@
 <%= render 'layouts/turbo_dialog' do %>
   <div data-action="turbo:submit-end->dialog#submitEnd">
-    <h1 class="font-bold text-4xl">New comment</h1>
+    <h1 class="font-bold text-4xl flex justify-center text-gray-900"><%= t("influencers.new") %></h1>
     <%= render "form", influencer: @influencer %>
   </div>
 <% end %>

@@ -7,4 +7,6 @@ class Influencer < ApplicationRecord
   validates :followers, numericality: { only_integer: true }
 
   enum :platform, { youtube: 0, instagram: 1, tiktok: 2 }
+
+  scope :ordered, -> { order(created_at: :desc) }
 end

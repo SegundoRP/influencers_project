@@ -31,6 +31,6 @@ class ImportInfluencersJob < ApplicationJob
     Turbo::StreamsChannel.broadcast_replace_to "influencers_list",
                         partial: "influencers/list",
                         target: "influencers",
-                        locals: { influencers: Influencer.all }
+                        locals: { influencers: Influencer.all.ordered.page(1).per(8) }
   end
 end

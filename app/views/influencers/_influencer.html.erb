@@ -18,7 +18,7 @@
       </p>
       <p class="text-sm text-gray-500 flex items-center">
         <span class="font-medium mr-2"><%= t("influencers.is_verified") %>:</span>
-        <%= image_tag influencer.is_verified ? 'check.png' : 'mark.png', alt: t("influencers.is_verified_photo"), height: 12, width: 12 %>
+        <%= image_tag influencer_is_verified(influencer), alt: t("influencers.is_verified_photo"), height: 12, width: 12 %>
       </p>
     </div>
   </div>

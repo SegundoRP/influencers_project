@@ -1,7 +1,7 @@
 class InfluencersController < ApplicationController
   def index
     ImportInfluencersJob.perform_later unless Influencer.exists?(is_manual: false)
-    @influencers = Influencer.order(created_at: :desc).page(params[:page]).per(8)
+    @influencers = Influencer.ordered.page(params[:page]).per(8)
 
     if params[:query].present?
       @influencers = @influencers.where("fullname iLIKE ?", "%#{params[:query]}%")

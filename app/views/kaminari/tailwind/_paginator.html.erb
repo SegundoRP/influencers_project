@@ -1,0 +1,19 @@
+<nav class="flex justify-center my-6">
+  <ul class="inline-flex items-center space-x-2">
+    <%= link_to_prev_page influencers, 'Anterior', class: 'px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-900' %>
+
+    <% paginator.each_page do |page| %>
+      <% if page.current? %>
+        <li class="px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 border border-blue-500 rounded-lg">
+          <%= page %>
+        </li>
+      <% else %>
+        <li>
+          <%= link_to page, url_for(page: page), class: 'px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-900' %>
+        </li>
+      <% end %>
+    <% end %>
+
+    <%= link_to_next_page influencers, 'Siguiente', class: 'px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-900' %>
+  </ul>
+</nav>

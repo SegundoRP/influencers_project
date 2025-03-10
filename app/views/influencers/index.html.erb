@@ -1,43 +1,25 @@
-<h1>Influencers</h1>
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-10 flex justify-center text-gray-900"><%= t("influencers.index") %></h1>
 
-<section>
-  <%= link_to "Nuevo influencer",
-                new_influencer_path,
-                class: "btn btn--primary",
-                data: { turbo_frame: :new_influencer, action: "click->dialog#open" } %>
+  <section class="mb-6 flex justify-between items-center">
+    <div class="flex-1 justify-self-start">
+      <%= render 'search_bar' %>
+    </div>
+    <div class="flex-none justify-self-end">
+      <%= link_to t("influencers.button_new"),
+                  new_influencer_path,
+                  class: "bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-4 px-4 rounded-lg shadow",
+                  data: { turbo_frame: :new_influencer, action: "click->dialog#open" } %>
+      <%= turbo_frame_tag :new_influencer %>
+    </div>
+  </section>
 
-  <%= turbo_frame_tag :new_influencer %>
-</section>
+  <%= turbo_frame_tag :influencers_index do %>
+    <%= render "influencers/list", influencers: @influencers %>
+    <div class="mt-6">
+      <%= paginate @influencers, theme: 'tailwind', influencers: @influencers %>
+    </div>
+  <% end %>
 
-<turbo-frame id="influencers_list">
-  <table>
-    <thead>
-      <tr>
-        <th>Profile</th>
-        <th>Username</th>
-        <th>Full Name</th>
-        <th>Followers</th>
-        <th>Platform</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @influencers.each do |influencer| %>
-        <tr id="influencer_<%= influencer.id %>">
-          <td><img src="<%= influencer.picture %>" alt="<%= influencer.username %>" width="50"></td>
-          <td><%= influencer.username %></td>
-          <td><%= influencer.fullname %></td>
-          <td><%= number_with_delimiter(influencer.followers) %></td>
-          <td><%= influencer.platform.capitalize %></td>
-          <td>
-            <%= button_to "Delete", influencer, method: :delete, data: { turbo_confirm: "Are you sure?", turbo_frame: "influencers_list" } %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</turbo-frame>
-
-<div id="influencers">
-
+  <%= turbo_stream_from :influencers_list %>
 </div>

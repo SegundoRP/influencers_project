@@ -1,41 +1,84 @@
 <%= form_with model: influencer, url: influencers_path, method: :post do |f| %>
-  <% if influencer.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      <h2><%= pluralize(influencer.errors.count, "error") %> prohibited this influencer from being saved:</h2>
+  <div class="border-b border-gray-900/10 pb-12">
+    <div class="space-y-12">
+      <fieldset>
+        <% if influencer.errors.any? %>
+          <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+            <legend class="text-sm/6 font-semibold"><%= t("influencers.errors", count: pluralize(influencer.errors.count, "error")) %>:</legend>
 
-      <ul>
-        <% influencer.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+            <ul>
+              <% influencer.errors.each do |error| %>
+                <li><%= error.full_message %></li>
+              <% end %>
+            </ul>
+          </div>
         <% end %>
-      </ul>
-    </div>
-  <% end %>
+      </fieldset>
 
-  <div>
-    <%= f.label :username, "Username" %>
-    <%= f.text_field :username %>
+      <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8">
+        <div class="sm:col-span-4">
+          <%= f.label :username, t("influencers.username"), class: "block text-sm/6 font-medium text-gray-900" %>
+          <div class="mt-2">
+            <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
+              <%= f.text_field :username, class: "block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6", placeholder: "pewdiepie" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="sm:col-span-4">
+          <%= f.label :fullname, t("influencers.fullname"), class: "block text-sm/6 font-medium text-gray-900" %>
+          <div class="mt-2">
+            <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
+              <%= f.text_field :fullname, class: "block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6", placeholder: "The Rock" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="sm:col-span-4">
+          <%= f.label :picture, t("influencers.picture"), class: "block text-sm/6 font-medium text-gray-900" %>
+          <div class="mt-2">
+            <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
+              <%= f.text_field :picture, class: "block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6", placeholder: "https://i.pravatar.cc/150?img=35" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="sm:col-span-4">
+          <%= f.label :followers, t("influencers.followers_number"), class: "block text-sm/6 font-medium text-gray-900" %>
+          <div class="mt-2">
+            <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
+              <%= f.text_field :followers, type: 'number', class: "block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6", placeholder: "50000" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="sm:col-span-3">
+          <%= f.label :platform, t("influencers.platform"), class: "block text-sm/6 font-medium text-gray-900" %>
+          <div class="mt-2 grid grid-cols-1">
+            <%= f.select :platform, Influencer.platforms.keys.map { |platform| [platform.titleize, platform] }, { },
+                          class: "col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
+            <svg class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+              <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+            </svg>
+          </div>
+        </div>
+
+        <div class="sm:col-span-4">
+          <%= f.hidden_field :is_verified, value: 0 %>
+
+          <div class="mt-2">
+            <div class="flex items-center">
+              <%= f.check_box :is_verified, class: "toggle block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6", id: "snippet_is_verified" %>
+              <%= f.label :is_verified, t("influencers.verified_account"), class: "optional block text-sm/6 font-medium text-gray-900", for: "snippet_is_verified" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div>
-    <%= f.label :fullname, "Full Name" %>
-    <%= f.text_field :fullname %>
-  </div>
-  <div>
-    <%= f.label :picture, "Profile Picture URL" %>
-    <%= f.text_field :picture %>
-  </div>
-  <div>
-    <%= f.label :followers, "Followers" %>
-    <%= f.number_field :followers %>
-  </div>
-  <div>
-    <%= f.label :platform, "Platform" %>
-    <%= f.select :platform, Influencer.platforms.keys.map { |p| [p.titleize, p] } %>
-  </div>
-  <div>
-    <%= f.label :is_verified, "Is verified" %>
-    <%= f.text_field :is_verified %>
-  </div>
-  <div>
-    <%= f.submit "Add Influencer" %>
+
+  <div class="mt-6 flex items-center justify-end gap-x-6">
+    <button type="button" class="text-sm/6 font-semibold text-gray-900 cursor-pointer" data-action="click->dialog#close"><%= t("close") %></button>
+    <%= f.submit t("influencers.button_new"), class: 'cursor-pointer rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"' %>
   </div>
 <% end %>

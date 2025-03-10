@@ -1,6 +1,11 @@
 class InfluencersController < ApplicationController
   def index
-    @influencers = Influencer.all
+    ImportInfluencersJob.perform_later unless Influencer.exists?(is_manual: false)
+    @influencers = Influencer.order(created_at: :desc).page(params[:page]).per(8)
+
+    if params[:query].present?
+      @influencers = @influencers.where("fullname iLIKE ?", "%#{params[:query]}%")
+    end
   end
 
   def create
@@ -9,7 +14,7 @@ class InfluencersController < ApplicationController
     respond_to do |format|
       if @influencer.save
         format.turbo_stream do
-          render turbo_stream: turbo_stream.append("influencers", partial: "influencers/influencer", locals: { influencer: @influencer })
+          render turbo_stream: turbo_stream.prepend("influencers", partial: "influencers/influencer", locals: { influencer: @influencer })
         end
       else
         format.html { render :new, status: :unprocessable_entity }

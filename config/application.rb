@@ -38,5 +38,10 @@ module InfluencersProject
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.active_job.queue_adapter = :solid_queue
+
+    config.i18n.default_locale = :es
+    config.i18n.available_locales = [:en, :es]
   end
 end

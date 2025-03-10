@@ -1,0 +1,50 @@
+es:
+  search: Buscar
+  close: Cerrar
+  errors:
+    format: "%{message}"
+  influencers:
+    errors: Hay %{count} errores en el formulario
+    index: Lista de influencers
+    username: Username
+    fullname: Nombre completo
+    is_verified_photo: Foto de verificación
+    external_id: ID externo
+    followers: Seguidores
+    followers_number: Número de seguidores
+    picture: URL de la imagen
+    is_manual: Creación manual
+    is_verified: Verificado
+    verified_account: Cuenta verificada
+    platform: Plataforma
+    new: Nuevo influencer
+    button_new: Crear influencer
+    cancel: Cerrar
+    create:
+      success: Influencer creado exitosamente
+      failure: No se pudo crear el influencer
+  activerecord:
+    models:
+      influencer: Influencer
+    errors:
+      models:
+        influencer:
+          attributes:
+            username:
+              blank: "El username no puede estar en blanco"
+              taken: "El username ya está en uso"
+              invalid: "El formato del username es incorrecto"
+            external_id:
+              taken: "El ID externo ya está en uso"
+            fullname:
+              blank: "El nombre completo no puede estar en blanco"
+            picture:
+              blank: "La URL de la foto no puede estar en blanco"
+              invalid: "El formato de la url de la imagen es incorrecto"
+            followers:
+              blank: "El número de los seguidores no puede estar en blanco"
+              not_a_number: "Los seguidores deben contener solo números"
+            platform:
+              blank: "La plataforma no puede estar en blanco"
+            is_verified:
+              blank: "Debe indicar si la cuenta está verificada o no"
